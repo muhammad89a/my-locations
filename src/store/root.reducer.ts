@@ -1,8 +1,9 @@
 import { combineReducers } from "redux";
+import categoriesReducer from "./categories/categories.reducer";
 
 const rootReducer = combineReducers({
   common: () => null,
-  categories: () => null,
+  categories: categoriesReducer,
   locations: () => null,
 });
 

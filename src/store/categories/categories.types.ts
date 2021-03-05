@@ -1,0 +1,1 @@
+export const SET_CATEGORIES_LIST_ACTION = "categories/SET_CATEGORIES_LIST";
