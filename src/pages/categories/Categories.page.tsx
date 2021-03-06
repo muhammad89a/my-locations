@@ -1,9 +1,9 @@
-import { Button } from "@material-ui/core";
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Category } from "../../models/Category";
 import * as categoriesActions from "../../store/categories/categories.actions";
 import categories from "../../data/categories.json";
+import CategoriesList from "../../components/categoriesList/CategoriesList";
 
 //state to props
 export interface StateProps {
@@ -17,19 +17,14 @@ export interface DispatchProps {
 export interface OwnProps {}
 export type Props = StateProps & DispatchProps & OwnProps;
 const Categories = (props: Props) => {
+  useEffect(() => {
+    props.setCategories(categories);
+  }, []);
+
   return (
     <div>
       <h1>Categories</h1>
-      {props.categoriesList.map((item) => {
-        return <div>{item.name}</div>;
-      })}
-      <Button
-        onClick={() => {
-          props.setCategories(categories);
-        }}
-      >
-        Click me
-      </Button>
+      <CategoriesList list={props.categoriesList}></CategoriesList>
     </div>
   );
 };

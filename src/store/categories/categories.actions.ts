@@ -8,3 +8,10 @@ export const setCategoriesList = (categories: Category[]): Action => {
     payload: categories,
   };
 };
+
+export const setSelectedCategoryId = (id: number): Action => {
+  return {
+    type: t.SET_SELECTED_CATEGORIES_ID_ACTION,
+    payload: id,
+  };
+};

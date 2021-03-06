@@ -1,12 +1,14 @@
 import React from "react";
 import { Provider } from "react-redux";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import CssBaseline from "@material-ui/core/CssBaseline";
 
 import store from "./store/store";
 import CategoriesPage from "./pages/categories/Categories.page";
 import HomePage from "./pages/home/Home.page";
 import LocationsPage from "./pages/locations/Locations.page";
+import Page404 from "./pages/Page404/Page404.page";
+import CreateCategory from "./pages/createCategory/CreateCategory.page";
 import Toolbar from "./components/toolbar/Toolbar";
 import DefaultPageLayout from "./components/defaultPageLayout/DefaultPageLayout";
 
@@ -14,12 +16,6 @@ function App() {
   return (
     <Provider store={store}>
       <Router>
-        {/* <ul>
-          <li><Link to="/">HOME</Link></li>
-          <li><Link to="/locations">LOCATIONS</Link></li>
-          <li><Link to="/categories">CATEGORIES</Link></li>
-        </ul> */}
-
         <CssBaseline />
         <Toolbar />
         <Switch>
@@ -36,6 +32,16 @@ function App() {
           <Route path="/categories" exact>
             <DefaultPageLayout>
               <CategoriesPage />
+            </DefaultPageLayout>
+          </Route>
+          <Route path="/createCategory" exact>
+            <DefaultPageLayout>
+              <CreateCategory />
+            </DefaultPageLayout>
+          </Route>
+          <Route>
+            <DefaultPageLayout>
+              <Page404 />
             </DefaultPageLayout>
           </Route>
         </Switch>
