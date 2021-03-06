@@ -12,6 +12,7 @@ import { ContextActionType } from "../../models/ContextActionType.enum";
 import * as contextActions from "../../store/context/context.actions";
 import * as categoriesActions from "../../store/categories/categories.actions";
 import { Category } from "../../models/Category";
+// import { SELECTED_CATEGORY_LOCAL_STORAGE_KEY } from "../../utils/Constants";
 
 //state to props
 export interface StateProps {

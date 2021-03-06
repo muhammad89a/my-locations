@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { useParams } from "react-router";
+import React, { useState } from "react";
+import { useParams, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
@@ -36,6 +36,7 @@ export interface StateProps {
 //action to props
 export interface DispatchProps {
   setUpdateCategoryItem: (category: Category) => void;
+  createCategoryItem: (category: Category) => void;
 }
 //parent
 export interface OwnProps {}
@@ -47,31 +48,49 @@ export type Props = StateProps & DispatchProps & OwnProps;
 //component
 const CreateUpdateCategory = (props: any) => {
   const classes = useStyles();
-
+  const history = useHistory();
   let parameters: UpdateCategoryParam | null = useParams();
-  console.log("id=" + parameters?.id);
+  console.log("parameters>>>=" + parameters);
 
-  useEffect(() => {
-    //todo get selected from local storage
-    if (parameters) {
+  const [name, setName] = useState(props.category?.name);
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    let newCat;
+    if (props.category) {
+      newCat = {
+        id: parameters?.id,
+        name: name,
+      };
+      props.setUpdateCategoryItem(newCat);
+    } else {
+      newCat = {
+        id: new Date().valueOf(),
+        name: name,
+      };
+      props.createCategoryItem(newCat);
     }
-  }, []);
+    history.push("/");
+  };
 
   return (
     <Container component="main" maxWidth="xs">
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">
-          {!parameters
+          {!props.category
             ? "Create new Category"
-            : `Update Category  ${props.category.id}`}
+            : `Update Category  ${props.category?.id}`}
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <TextField
             required
             id="name"
             name="name"
             label="Category Name"
-            value={props.category ? props.category.name : null}
+            value={name}
+            onChange={(event) => {
+              setName(event.target.value);
+            }}
             fullWidth
             autoFocus
             autoComplete="given-name"
@@ -85,7 +104,7 @@ const CreateUpdateCategory = (props: any) => {
             color="primary"
             className={classes.submit}
           >
-            {!parameters ? "Create" : "Update"}
+            {!props.category ? "Create" : "Update"}
           </Button>
         </form>
       </div>
@@ -101,7 +120,8 @@ const mapStateToProps = (state: any): StateProps => ({
 const mapDispatchToProps = (dispatch: any): DispatchProps => ({
   setUpdateCategoryItem: (category) =>
     dispatch(categoriesActions.setUpdateCategoryItem(category)),
-  // getCurrentCategory: (category) => dispatch(categoriesActions.getCurrentCategory(category)),
+  createCategoryItem: (category) =>
+    dispatch(categoriesActions.createCategoryItem(category)),
 });
 
 export default connect(

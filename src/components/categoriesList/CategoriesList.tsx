@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 //state to props
 export interface StateProps {
-  selectedCategoryId: number;
+  selectedCategory: Category;
 }
 //action to props
 export interface DispatchProps {}
@@ -43,9 +43,11 @@ export type Props = StateProps & DispatchProps & OwnProps;
 const CategoriesList = (props: Props) => {
   const classes = useStyles();
 
+  const { selectedCategory, setContextTypeById } = props;
+
   useEffect(() => {
-    props.setContextTypeById(props.selectedCategoryId);
-  }, [props.selectedCategoryId]);
+    setContextTypeById(selectedCategory?.id);
+  }, [selectedCategory, setContextTypeById]);
 
   return (
     <List component="nav" className={classes.root} aria-label="mailbox folders">
@@ -58,7 +60,7 @@ const CategoriesList = (props: Props) => {
               }}
               className={classes.item}
               button
-              selected={props.selectedCategoryId === it.id}
+              selected={props.selectedCategory?.id === it.id}
             >
               <ListItemText primary={it.name} />
             </ListItem>
@@ -72,7 +74,7 @@ const CategoriesList = (props: Props) => {
 
 //redux
 const mapStateToProps = (state: any): StateProps => ({
-  selectedCategoryId: state.categories.selected,
+  selectedCategory: state.categories.selected,
 });
 
 const mapDispatchToProps = (dispatch: any): DispatchProps => ({

@@ -31,11 +31,20 @@ const setDeleteCategoryItem = (state: State, action: Action) => {
 };
 
 const setUpdateCategoryItem = (state: State, action: Action) => {
-  const newList = { ...state.list };
+  console.log("setUpdateCategoryItem");
   const newCategory = action.payload;
-  console.log(newCategory);
+  return {
+    ...state,
+    list: state.list.map((content) =>
+      content.id == newCategory.id
+        ? { ...content, name: newCategory.name }
+        : content
+    ),
+  };
+};
 
-  return { ...state, list: newList };
+const createCategoryItem = (state: State, action: Action) => {
+  return { ...state, list: [...state.list, action.payload] };
 };
 
 const categoriesReducer = (state: State = INITIAL_STATE, action: Action) => {
@@ -48,6 +57,8 @@ const categoriesReducer = (state: State = INITIAL_STATE, action: Action) => {
       return setDeleteCategoryItem(state, action);
     case t.UPDATE_CATEGORY_ITEM_ACTION:
       return setUpdateCategoryItem(state, action);
+    case t.CREATE_CATEGORY_ITEM_ACTION:
+      return createCategoryItem(state, action);
     default:
       return state;
   }

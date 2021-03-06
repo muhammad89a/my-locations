@@ -26,6 +26,13 @@ export const setDeleteCategoryItem = (): Action => {
 export const setUpdateCategoryItem = (category: Category): Action => {
   return {
     type: t.UPDATE_CATEGORY_ITEM_ACTION,
-    payload: null,
+    payload: category,
+  };
+};
+
+export const createCategoryItem = (category: Category): Action => {
+  return {
+    type: t.CREATE_CATEGORY_ITEM_ACTION,
+    payload: category,
   };
 };

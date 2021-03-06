@@ -5,7 +5,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 
 import store from "./store/store";
 import CategoriesPage from "./pages/categories/Categories.page";
-import HomePage from "./pages/home/Home.page";
+// import HomePage from "./pages/home/Home.page";
 import LocationsPage from "./pages/locations/Locations.page";
 import Page404 from "./pages/Page404/Page404.page";
 import CreateUpdateCategory from "./pages/createCategory/CreateUpdateCategory.page";
