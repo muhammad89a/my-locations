@@ -9,9 +9,23 @@ export const setCategoriesList = (categories: Category[]): Action => {
   };
 };
 
-export const setSelectedCategoryId = (id: number): Action => {
+export const setSelectedCategoryId = (category: Category): Action => {
   return {
     type: t.SET_SELECTED_CATEGORIES_ID_ACTION,
-    payload: id,
+    payload: category,
+  };
+};
+
+export const setDeleteCategoryItem = (): Action => {
+  return {
+    type: t.DELETE_CATEGORY_ITEM_ACTION,
+    payload: null,
+  };
+};
+
+export const setUpdateCategoryItem = (category: Category): Action => {
+  return {
+    type: t.UPDATE_CATEGORY_ITEM_ACTION,
+    payload: null,
   };
 };

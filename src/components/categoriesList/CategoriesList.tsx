@@ -9,7 +9,6 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
 import { Category } from "../../models/Category";
-import { ContextActionType } from "../../models/ContextActionType.enum";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -31,7 +30,7 @@ export interface StateProps {
 export interface DispatchProps {}
 //action to props
 export interface DispatchProps {
-  setSelectedCategoryId: (id: number) => void;
+  setSelectedCategoryId: (category: Category) => void;
   setContextTypeById: (id: number) => void;
 }
 //parent
@@ -40,6 +39,7 @@ export interface OwnProps {
 }
 export type Props = StateProps & DispatchProps & OwnProps;
 
+//component
 const CategoriesList = (props: Props) => {
   const classes = useStyles();
 
@@ -54,7 +54,7 @@ const CategoriesList = (props: Props) => {
           <React.Fragment key={it.id}>
             <ListItem
               onClick={() => {
-                props.setSelectedCategoryId(it.id);
+                props.setSelectedCategoryId(it);
               }}
               className={classes.item}
               button
@@ -70,6 +70,7 @@ const CategoriesList = (props: Props) => {
   );
 };
 
+//redux
 const mapStateToProps = (state: any): StateProps => ({
   selectedCategoryId: state.categories.selected,
 });

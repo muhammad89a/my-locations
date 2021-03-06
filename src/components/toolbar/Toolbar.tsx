@@ -10,14 +10,19 @@ import HomeIcon from "@material-ui/icons/Home";
 import { Link } from "react-router-dom";
 import { ContextActionType } from "../../models/ContextActionType.enum";
 import * as contextActions from "../../store/context/context.actions";
+import * as categoriesActions from "../../store/categories/categories.actions";
+import { Category } from "../../models/Category";
 
 //state to props
 export interface StateProps {
   contextType: ContextActionType;
+  category: Category;
 }
 //action to props
 export interface DispatchProps {
   setContextType: (type: ContextActionType) => void;
+  setDeleteCategoryItem: () => void;
+  setUpdateCategoryItem: (category: Category) => void;
 }
 //parent
 export interface OwnProps {}
@@ -59,8 +64,16 @@ const ButtonAppBar = (props: Props) => {
   );
   let updateElements: ReactElement = (
     <React.Fragment>
-      <Button color="inherit">Update</Button>
-      <Button color="inherit">Delete</Button>
+      <Button
+        color="inherit"
+        component={Link}
+        to={`/categories/${props.category?.id}`}
+      >
+        Update
+      </Button>
+      <Button color="inherit" onClick={() => props.setDeleteCategoryItem()}>
+        Delete
+      </Button>
     </React.Fragment>
   );
   let emptyElements: ReactElement = <React.Fragment></React.Fragment>;
@@ -104,12 +117,18 @@ const ButtonAppBar = (props: Props) => {
   );
 };
 
+//redux
 const mapStateToProps = (state: any): StateProps => ({
   contextType: state.context.contextType,
+  category: state.categories.selected,
 });
 
 const mapDispatchToProps = (dispatch: any): DispatchProps => ({
   setContextType: (type) => dispatch(contextActions.setContextActionType(type)),
+  setDeleteCategoryItem: () =>
+    dispatch(categoriesActions.setDeleteCategoryItem()),
+  setUpdateCategoryItem: (category) =>
+    dispatch(categoriesActions.setUpdateCategoryItem(category)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ButtonAppBar);

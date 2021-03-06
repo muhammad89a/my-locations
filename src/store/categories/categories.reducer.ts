@@ -18,11 +18,24 @@ const setCategoriesList = (state: State, action: Action) => {
 
 const setSelectedCategoryId = (state: State, action: Action) => {
   console.log(state);
-
   return {
     ...state,
     selected: state.selected === action.payload ? null : action.payload,
   };
+};
+
+const setDeleteCategoryItem = (state: State, action: Action) => {
+  const newList = state.list.filter((it) => it.id !== state.selected?.id);
+  console.log(newList);
+  return { ...state, list: newList };
+};
+
+const setUpdateCategoryItem = (state: State, action: Action) => {
+  const newList = { ...state.list };
+  const newCategory = action.payload;
+  console.log(newCategory);
+
+  return { ...state, list: newList };
 };
 
 const categoriesReducer = (state: State = INITIAL_STATE, action: Action) => {
@@ -31,6 +44,10 @@ const categoriesReducer = (state: State = INITIAL_STATE, action: Action) => {
       return setCategoriesList(state, action);
     case t.SET_SELECTED_CATEGORIES_ID_ACTION:
       return setSelectedCategoryId(state, action);
+    case t.DELETE_CATEGORY_ITEM_ACTION:
+      return setDeleteCategoryItem(state, action);
+    case t.UPDATE_CATEGORY_ITEM_ACTION:
+      return setUpdateCategoryItem(state, action);
     default:
       return state;
   }

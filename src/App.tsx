@@ -8,7 +8,7 @@ import CategoriesPage from "./pages/categories/Categories.page";
 import HomePage from "./pages/home/Home.page";
 import LocationsPage from "./pages/locations/Locations.page";
 import Page404 from "./pages/Page404/Page404.page";
-import CreateCategory from "./pages/createCategory/CreateCategory.page";
+import CreateUpdateCategory from "./pages/createCategory/CreateUpdateCategory.page";
 import Toolbar from "./components/toolbar/Toolbar";
 import DefaultPageLayout from "./components/defaultPageLayout/DefaultPageLayout";
 
@@ -21,7 +21,8 @@ function App() {
         <Switch>
           <Route path="/" exact>
             <DefaultPageLayout>
-              <HomePage />
+              {/* <HomePage /> */}
+              <CategoriesPage />
             </DefaultPageLayout>
           </Route>
           <Route path="/locations" exact>
@@ -34,9 +35,14 @@ function App() {
               <CategoriesPage />
             </DefaultPageLayout>
           </Route>
+          <Route path="/categories/:id" exact>
+            <DefaultPageLayout>
+              <CreateUpdateCategory />
+            </DefaultPageLayout>
+          </Route>
           <Route path="/createCategory" exact>
             <DefaultPageLayout>
-              <CreateCategory />
+              <CreateUpdateCategory />
             </DefaultPageLayout>
           </Route>
           <Route>

@@ -4,6 +4,7 @@ import { Category } from "../../models/Category";
 import * as categoriesActions from "../../store/categories/categories.actions";
 import categories from "../../data/categories.json";
 import CategoriesList from "../../components/categoriesList/CategoriesList";
+import { CATEGORIES_LOCAL_STORAGE_KEY } from "../../utils/Constants";
 
 //state to props
 export interface StateProps {
@@ -18,7 +19,20 @@ export interface OwnProps {}
 export type Props = StateProps & DispatchProps & OwnProps;
 const Categories = (props: Props) => {
   useEffect(() => {
-    props.setCategories(categories);
+    const categoriesLocalStorage = localStorage.getItem(
+      CATEGORIES_LOCAL_STORAGE_KEY
+    );
+    if (categoriesLocalStorage != null) {
+      console.log("get categories from LocalStorage");
+      props.setCategories(JSON.parse(categoriesLocalStorage));
+    } else {
+      console.log("get categories from json file");
+      localStorage.setItem(
+        CATEGORIES_LOCAL_STORAGE_KEY,
+        JSON.stringify(categories)
+      );
+      props.setCategories(categories);
+    }
   }, []);
 
   return (
